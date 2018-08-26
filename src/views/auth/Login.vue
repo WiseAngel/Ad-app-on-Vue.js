@@ -35,7 +35,8 @@
             <v-btn 
               color="primary"
               @click="onFormSubmit"
-              :disabled="!valid">
+              :disabled="!valid || loading"
+              :loading = "loading">
               Login
             </v-btn>
           </v-card-actions>
@@ -68,11 +69,24 @@
           const user = {
             email: this.email,
             password: this.password
-          }
-          console.log(user);
+          };
+
+          this.$store.dispatch('loginUser', user)
+            .then(() => this.$router.push('/'))
+            .catch(() => {})
         }
       }
     },
+    computed: {
+      loading() {
+        return this.$store.getters.loading;
+      }
+    },
+    created() {
+      if (this.$route.query['loginError']) {
+        this.$store.dispatch('setError', 'Please log in to access this page.');
+      }
+    }
   }
 </script>
 

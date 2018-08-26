@@ -4,12 +4,12 @@
       <v-flex xs12>
         <v-card>
           <v-card-media
-            src=""
+            :src="ad.imageSrc"
             height="300"
           ></v-card-media>
           <v-card-text>
-            <h1 class="text--primary"></h1>
-            <p></p>
+            <h1 class="text--primary"> {{ ad.title }}</h1>
+            <p>{{ ad.description }}</p>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -24,9 +24,11 @@
 
 <script>
   export default {
-    data() {
-      return {
-        title: 'Ad'
+    props: ['id'],
+    computed: {
+      ad() {
+        const id = this.id;
+        return this.$store.getters.adById(id);
       }
     },
   }

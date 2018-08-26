@@ -1,11 +1,14 @@
 <template>
-  <div class="home">
+  <div
+    class="home"
+    v-if="!loading"
+  >
     <v-container fluid>
       <v-layout row>
         <v-flex xs12>
           <v-carousel>
             <v-carousel-item 
-              v-for="ad in ads" 
+              v-for="ad in promoAds"
               :key="ad.id" 
               :src="ad.imageSrc">
               <div class="carousel__link">
@@ -44,36 +47,60 @@
       </v-layout>
     </v-container>
   </div>
+  <div v-else>
+    <v-container>
+      <v-layout row>
+        <v-flex xs12 class="text-xs-center pt-5">
+          <v-progress-circular
+            :size="100"
+            :width="7"
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
   export default {
-    data() {
-      return {
-        title: 'Home',
-        ads: [
-          {
-            title: 'First', 
-            description: 'First desc', 
-            promo: false, 
-            imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg', 
-            id: '1'
-          },
-          {
-            title: 'Second',
-            description: 'Second desc',
-            promo: true, 
-            imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', 
-            id: '2'
-          },
-          {
-            title: 'Third', 
-            description: 'Third desc', 
-            promo: true, 
-            imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg', 
-            id: '3'
-          }
-        ]
+    // data() {
+    //   return {
+    //     ads: [
+    //       {
+    //         title: 'First', 
+    //         description: 'First desc', 
+    //         promo: false, 
+    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg', 
+    //         id: '1'
+    //       },
+    //       {
+    //         title: 'Second',
+    //         description: 'Second desc',
+    //         promo: true, 
+    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', 
+    //         id: '2'
+    //       },
+    //       {
+    //         title: 'Third', 
+    //         description: 'Third desc', 
+    //         promo: true, 
+    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg', 
+    //         id: '3'
+    //       }
+    //     ]
+    //   }
+    // },
+    computed: {
+      promoAds() {
+        return this.$store.getters.promoAds;
+      },
+      ads() {
+        return this.$store.getters.ads;
+      },
+      loading() {
+        return this.$store.getters.loading;
       }
     },
   }

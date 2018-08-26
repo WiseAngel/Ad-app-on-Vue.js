@@ -4,7 +4,7 @@
       <v-flex xs12 sm6>
         <h1 class="text--secondary mb-3">My ads</h1>
         <v-card
-          v-for="ad in ads"
+          v-for="ad in myAds"
           :key="ad.id"
           class="elevation-10 mb-4"
         >
@@ -37,31 +37,36 @@
 
 <script>
   export default {
-    data() {
-      return {
-        ads: [
-          {
-            title: 'First',
-            description: 'First desc',
-            promo: false,
-            imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-            id: '1'
-          },
-          {
-            title: 'Second',
-            description: 'Second desc',
-            promo: true,
-            imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-            id: '2'
-          },
-          {
-            title: 'Third',
-            description: 'Third desc',
-            promo: true,
-            imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-            id: '3'
-          }
-        ]
+    // data() {
+    //   return {
+    //     ads: [
+    //       {
+    //         title: 'First',
+    //         description: 'First desc',
+    //         promo: false,
+    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+    //         id: '1'
+    //       },
+    //       {
+    //         title: 'Second',
+    //         description: 'Second desc',
+    //         promo: true,
+    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+    //         id: '2'
+    //       },
+    //       {
+    //         title: 'Third',
+    //         description: 'Third desc',
+    //         promo: true,
+    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+    //         id: '3'
+    //       }
+    //     ]
+    //   }
+    // },
+    computed: {
+      myAds() {
+        return this.$store.getters.myAds;
       }
     },
   }

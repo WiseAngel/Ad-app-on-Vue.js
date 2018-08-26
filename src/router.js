@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import AuthGuard from './routes/auth-guard'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -13,17 +14,20 @@ export default new Router({
     },
     {
       path: '/ad/:id',
+      props: true,
       name: 'ad',
       component: () => import(/* webpackChunkName: "ads" */ './views/ads/Ad.vue')
     },
     {
       path: '/new',
       name: 'newAd',
+      beforeEnter: AuthGuard,
       component: () => import(/* webpackChunkName: "ads" */ './views/ads/NewAd.vue')
     },
     {
       path: '/list',
       name: 'adList',
+      beforeEnter: AuthGuard,
       component: () => import(/* webpackChunkName: "ads" */ './views/ads/AdList.vue')
     },
     {
@@ -39,6 +43,7 @@ export default new Router({
     {
       path: '/orders',
       name: 'orders',
+      beforeEnter: AuthGuard,
       component: () => import(/* webpackChunkName: "orders" */ './views/orders/Orders.vue')
     }
   ],

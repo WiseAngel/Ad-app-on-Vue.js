@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <v-navigation-drawer 
       app 
       temporary 
@@ -14,6 +14,17 @@
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title v-text="link.title"></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile
+          @click="onLogout"
+          v-if="isUserLoggedIn"
+        >
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Logout</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -38,14 +49,38 @@
               <v-icon left>{{ link.icon }}</v-icon>
               {{ link.title }}
             </v-btn>
+            <v-btn
+              flat
+              @click="onLogout"
+              v-if="isUserLoggedIn"
+            >
+              <v-icon left>exit_to_app</v-icon>
+              Logout
+            </v-btn>
           </v-toolbar-items>
         </v-toolbar>
       </template>
     </v-toolbar>
-
     <v-content>
       <router-view></router-view>
     </v-content>
+    <v-snackbar
+      :multi-line="true"
+      :timeout="5000"
+      @input="closeError"
+      color="error"
+      value="true"
+      v-if="error"
+    >
+      {{ error }}
+      <v-btn
+        dark
+        flat
+        @click.native="closeError"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -54,16 +89,39 @@ export default {
   name: 'App',
   data() {
     return {
-      drawer: false,
-      links: [
-        {title: 'Login', icon: 'lock', url: '/login/'},
-        {title: 'Registration', icon: 'face', url: '/registration/'},
-        {title: 'Orders', icon: 'bookmark_border', url: '/orders/'},
-        {title: 'New ad', icon: 'note_add', url: '/new/'},
-        {title: 'My ads', icon: 'list', url: '/list/'},
-      ]
+      drawer: false
     }
   },
+  methods: {
+    closeError() {
+      this.$store.dispatch('clearError');
+    },
+    onLogout() {
+      this.$store.dispatch('logoutUser');
+      this.$router.push('/')
+    }
+  },
+  computed: {
+    error() {
+      return this.$store.getters.error;
+    },
+    isUserLoggedIn() {
+      return this.$store.getters.isUserLoggedIn;
+    },
+    links() {
+      if (this.isUserLoggedIn) {
+        return [
+          {title: 'Orders', icon: 'bookmark_border', url: '/orders/'},
+          {title: 'New ad', icon: 'note_add', url: '/new/'},
+          {title: 'My ads', icon: 'list', url: '/list/'}
+        ]
+      }
+      return [
+        {title: 'Login', icon: 'lock', url: '/login/'},
+        {title: 'Registration', icon: 'face', url: '/registration/'}
+      ]
+    }
+  }
 }
 </script>
 
