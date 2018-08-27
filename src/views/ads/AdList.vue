@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-layout row align-center justify-center>
+    <v-layout row align-center justify-center v-if="!loading && myAds.length !== 0">
       <v-flex xs12 sm6>
         <h1 class="text--secondary mb-3">My ads</h1>
         <v-card
@@ -32,43 +32,34 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <v-layout v-else-if="!loading && myAds.length === 0">
+      <v-flex xs12 class="text-xs-center">
+        <h1 class="text--primary">You have no ads</h1>
+      </v-flex>
+    </v-layout>
+    <v-layout v-else>
+      <v-flex xs12 class="text-xs-center">
+        <v-progress-circular
+          :size="100"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
 <script>
   export default {
-    // data() {
-    //   return {
-    //     ads: [
-    //       {
-    //         title: 'First',
-    //         description: 'First desc',
-    //         promo: false,
-    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-    //         id: '1'
-    //       },
-    //       {
-    //         title: 'Second',
-    //         description: 'Second desc',
-    //         promo: true,
-    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-    //         id: '2'
-    //       },
-    //       {
-    //         title: 'Third',
-    //         description: 'Third desc',
-    //         promo: true,
-    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-    //         id: '3'
-    //       }
-    //     ]
-    //   }
-    // },
     computed: {
       myAds() {
         return this.$store.getters.myAds;
+      },
+      loading() {
+        return this.$store.getters.loading;
       }
-    },
+    }
   }
 </script>
 

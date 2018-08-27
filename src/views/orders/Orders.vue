@@ -1,7 +1,15 @@
 <template>
   <v-container>
     <v-layout row align-center justify-center>
-      <v-flex xs12 sm6>
+      <v-flex xs12 class="text-xs-center pt-5" v-if="loading">
+        <v-progress-circular
+          :size="100"
+          :width="7"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+      </v-flex>
+      <v-flex xs12 sm6 v-else-if="!loading && orders.length !== 0">
         <h1 class="text-xs-center text--secondary mb-3">Orders</h1>
         <v-list two-line subheader>
           <v-list-tile
@@ -23,11 +31,14 @@
             <v-list-tile-action>
               <v-btn
                 class="primary"
-                :to="`/ad/${order.adId}`"
+                :to="'/ad/' + order.adId"
               >Open</v-btn>
             </v-list-tile-action>
           </v-list-tile>
         </v-list>
+      </v-flex>
+      <v-flex xs12 class="text-xs-center" v-else>
+        <h1 class="text--secondary"> You have no orders</h1>
       </v-flex>
     </v-layout>
   </v-container>
@@ -35,24 +46,22 @@
 
 <script>
   export default {
-    data() {
-      return {
-        orders: [
-          {
-            id: '123',
-            name: 'Nik',
-            phone: '8-999-999-99-99',
-            adId: '321',
-            done: false
-          }
-        ]
-      }
-    },
     methods: {
       markDone(order) {
         order.done = true
       }
     },
+    computed: {
+      loading() {
+        return this.$store.getters.loading;
+      },
+      orders() {
+        return this.$store.getters.orders;
+      }
+    },
+    created() {
+      return this.$store.dispatch('fetchOrders');
+    }
   }
 </script>
 

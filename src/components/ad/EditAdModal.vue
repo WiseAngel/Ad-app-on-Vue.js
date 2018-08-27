@@ -52,8 +52,8 @@
     data() {
       return {
         modal: false,
-        editedTitle: this.ad.title,
-        editedDescription: this.ad.description
+        editedDescription: this.ad.description,
+        editedTitle: this.ad.title
       }
     },
     methods: {
@@ -67,14 +67,13 @@
           this.$store.dispatch('updateAd', {
             title: this.editedTitle,
             description: this.editedDescription,
-            ad: this.ad.id
+            id: this.ad.id
           });
 
           this.modal = false;
         }
-
       }
-    },
+    }
   }
 </script>
 

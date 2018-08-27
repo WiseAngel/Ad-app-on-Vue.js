@@ -40,7 +40,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn flat :to="`/ad/${ad.id}`">Open</v-btn>
-              <v-btn raised class="primary">Buy</v-btn>
+              <buy-modal :ad="ad"></buy-modal>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -64,34 +64,9 @@
 </template>
 
 <script>
+  import BuyModal from "@/components/ad/BuyModal";
   export default {
-    // data() {
-    //   return {
-    //     ads: [
-    //       {
-    //         title: 'First', 
-    //         description: 'First desc', 
-    //         promo: false, 
-    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg', 
-    //         id: '1'
-    //       },
-    //       {
-    //         title: 'Second',
-    //         description: 'Second desc',
-    //         promo: true, 
-    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg', 
-    //         id: '2'
-    //       },
-    //       {
-    //         title: 'Third', 
-    //         description: 'Third desc', 
-    //         promo: true, 
-    //         imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg', 
-    //         id: '3'
-    //       }
-    //     ]
-    //   }
-    // },
+    components: {BuyModal},
     computed: {
       promoAds() {
         return this.$store.getters.promoAds;
