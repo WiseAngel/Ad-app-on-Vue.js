@@ -126,6 +126,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.pointer
-  cursor pointer
+  .pointer
+    cursor pointer
 </style>

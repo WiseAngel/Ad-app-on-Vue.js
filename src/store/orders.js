@@ -45,13 +45,24 @@ export default {
           const o = orders[key];
 
           resultOrders.push(
-            new Order(o.name, o.phone, o.done, key)
+            new Order(o.name, o.phone, o.adId, o.done, key)
           )
         });
         commit('loadOrders', resultOrders);
         commit('setLoading', false);
       } catch (error) {
         commit('setLoading', false);
+        commit('setError', error.message);
+        throw error;
+      }
+    },
+    async markOrderDone({commit, getters}, payload) {
+      commit('clearError');
+      try {
+        await firebase.database().ref(`/users/${getters.user.id}/orders`).child(payload).update({
+          done: true
+        })
+      } catch (error) {
         commit('setError', error.message);
         throw error;
       }

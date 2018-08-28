@@ -16,35 +16,35 @@ export default new Router({
       path: '/ad/:id',
       props: true,
       name: 'ad',
-      component: () => import(/* webpackChunkName: "ads" */ './views/ads/Ad.vue')
+      component: () => import('./views/ads/Ad.vue')
     },
     {
       path: '/new',
       name: 'newAd',
       beforeEnter: AuthGuard,
-      component: () => import(/* webpackChunkName: "ads" */ './views/ads/NewAd.vue')
+      component: () => import('./views/ads/NewAd.vue')
     },
     {
       path: '/list',
       name: 'adList',
       beforeEnter: AuthGuard,
-      component: () => import(/* webpackChunkName: "ads" */ './views/ads/AdList.vue')
+      component: () => import('./views/ads/AdList.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import(/* webpackChunkName: "auth" */ './views/auth/Login.vue')
+      component: () => import('./views/auth/Login.vue')
     },
     {
       path: '/registration',
       name: 'registration',
-      component: () => import(/* webpackChunkName: "auth" */ './views/auth/Registration.vue')
+      component: () => import('./views/auth/Registration.vue')
     },
     {
       path: '/orders',
       name: 'orders',
       beforeEnter: AuthGuard,
-      component: () => import(/* webpackChunkName: "orders" */ './views/orders/Orders.vue')
+      component: () => import('./views/orders/Orders.vue')
     }
   ],
   mode: 'history'
